@@ -6,37 +6,50 @@ class Agent_0:
 	'''
 	def __init__(self):
 		self.left = 0
-		self.front = 0
-		self.front = 0
+		self.front = 1
+		self.right = 0
+		self.current_loc = (7,10)
+		self.direction = "N"
 
 	def status(self):
-		if self.left == 1 and self.front == 1 and self.right == 1:
-			print(''' ---
-					 |   |''')
-		elif self.left == 1 and self.front == 1 and self.right == 0:
-			print(''' ---
-					 |   >''')
-		elif self.left == 1 and self.front == 0 and self.right == 1:
-			print('''  ^ 
-					 |   |''')
-		elif self.left == 0 and self.front == 1 and self.right == 1:
-			print(''' ---
-					 <   |''')
-		elif self.left == 1 and self.front == 0 and self.right == 0:
-			print('''  ^
-					 |   >''')
-		elif self.left == 1 and self.front == 0 and self.right == 0:
-			print('''  ^
-					 <   |''')
-		elif self.left == 0 and self.front == 0 and self.right == 0:
-			print('''  ^
-					 <   >''')
+		sides = ("left","front","right")
+		vision = (self.left,self.front,self.right)
+		options = {"left":"<","front":"^","right":">"}
+ 
+		moves_rn = [options[sides[i]] for i in range(len(vision)) if vision[i] == 0]
+		print(moves_rn)
 
-#TODO : > Make a function for setting values of left, front, right
-#		> Make Internal Compass functionality
-#		> Make function for getting surrounding values
-#		> Make movement function for traversal
+	def move_forward(self):
+		if self.direction == "N":
+			self.current_loc = tuple(map(sum, zip(self.current_loc, (1,0))))
+			print(self.current_loc)
+		elif self.direction == "S":
+			self.current_loc = tuple(map(sum, zip(self.current_loc, (-1,0))))
+		elif self.direction == "E":
+			self.current_loc = tuple(map(sum, zip(self.current_loc, (0,1))))
+		elif self.direction == "W":
+			self.current_loc = tuple(map(sum, zip(self.current_loc, (0,-1))))
+
+	def turn(self,side):
+		print(self.direction)
+		current = ("N","E","S","W")
+		right = ("E","S","W","N")
+		left = ("W","N","E","S")
+		right_dir = dict(zip(current,right))
+		left_dir = dict(zip(current,left))
+
+		if side == "Right":
+			self.direction = right_dir[self.direction]
+		elif side == "Left":
+			self.direction = left_dir[self.direction]
+
+
+
+#TODO : > 
 
 agent = Agent_0()
-print(agent.status(0,0,0))
+agent.status()
+agent.move_forward()
+agent.move_forward()
+agent.turn("Right")
 
