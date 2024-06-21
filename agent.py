@@ -9,26 +9,27 @@ class Agent_0:
 		self.front = 1
 		self.right = 0
 		self.current_loc = (7,10)
-		self.direction = "N"
+		self.direction = "E"
 
 	def status(self):
 		sides = ("left","front","right")
 		vision = (self.left,self.front,self.right)
-		options = {"left":"<","front":"^","right":">"}
- 
-		moves_rn = [options[sides[i]] for i in range(len(vision)) if vision[i] == 0]
-		print(moves_rn)
+		moves_rn = [sides[i] for i in range(len(vision)) if vision[i] == 0]
+		print(f"Moves available : {moves_rn}")
 
 	def move_forward(self):
 		if self.direction == "N":
 			self.current_loc = tuple(map(sum, zip(self.current_loc, (1,0))))
-			print(self.current_loc)
+			return self.current_loc
 		elif self.direction == "S":
 			self.current_loc = tuple(map(sum, zip(self.current_loc, (-1,0))))
+			return self.current_loc
 		elif self.direction == "E":
 			self.current_loc = tuple(map(sum, zip(self.current_loc, (0,1))))
+			return self.current_loc
 		elif self.direction == "W":
 			self.current_loc = tuple(map(sum, zip(self.current_loc, (0,-1))))
+			return self.current_loc
 
 	def turn(self,side):
 		print(self.direction)
@@ -40,16 +41,28 @@ class Agent_0:
 
 		if side == "Right":
 			self.direction = right_dir[self.direction]
+			print(self.direction)
 		elif side == "Left":
 			self.direction = left_dir[self.direction]
+			print(self.direction)
+		elif side == "Back":
+			self.direction = right_dir[self.direction]
+			self.direction = right_dir[self.direction]
+			print(self.direction)
 
+	def instances_num(self):
+		print(self.instances)
+
+def making_an_instance(agent_name):
+	exec( f"{agent_name} = Agent_0()")
 
 
 #TODO : > 
-
+'''
 agent = Agent_0()
 agent.status()
 agent.move_forward()
 agent.move_forward()
-agent.turn("Right")
+agent.turn("Back")
+'''
 
